@@ -1,0 +1,18 @@
+/.env
+.idea/
+/public/bundles/
+/var/
+/vendor/
+/docker/data/*
+/docker/log/*
+/docker/rabbitMQ/*
+/docker/web/*
+.phpunit
+phpunit.xml
+xdebug.log
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###

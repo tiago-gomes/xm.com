@@ -20,11 +20,11 @@
     {% for item in tableData %}
       <tr>
         <td>{{ item.date|date("Y-m-d G:i:s") }}</td>
-        <td>{{ item.open }}</td>
-        <td>{{ item.high }}</td>
-        <td>{{ item.low }}</td>
-        <td>{{ item.close }}</td>
-        <td>{{ item.volume }}</td>
+        <td>{{ item.open|number_format(4) }}</td>
+        <td>{{ item.high|number_format(4) }}</td>
+        <td>{{ item.low|number_format(4) }}</td>
+        <td>{{ item.close|number_format(4) }}</td>
+        <td>{{ item.volume|number_format(4) }}</td>
       </tr>
     {% endfor %}
     </tbody>

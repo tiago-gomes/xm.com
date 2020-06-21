@@ -60,15 +60,23 @@ class HomepageController extends Controller
         $groups = new Assert\GroupSequence(['Default', 'custom']);
     
         $constraint = new Assert\Collection([
-          'email' => new Assert\Email(),
+          'email' => new Assert\Email(['message'=>'The field Email is incorrect']),
           'symbol' => new Assert\Length(['min' => 4]),
-          'dateStart' => new Assert\Date(),
-          'dateEnd' => new Assert\Date()
+          'dateStart' => new Assert\Date(['message'=>'The field dateStart is incorrect']),
+          'dateEnd' => new Assert\Date(['message'=>'The field dateEnd is incorrect'])
         ]);
     
         $errors = $validator->validate($data, $constraint, $groups);
         if ($errors->count()>0) {
-            return $this->render('stock/search.html.twig', ['errors' => $errors, 'search' => $data]);
+            foreach( $errors as $error ) {
+                // data - $errors[0]->getRoot()
+                $this->addFlash("error", $error->getMessage());
+            }
+            return $this->redirectToRoute(
+              'searchView',
+              array('data' => $data),
+              301
+            );
         }
         
         $prices = $this->companyService->getCompanyGraphData($data);

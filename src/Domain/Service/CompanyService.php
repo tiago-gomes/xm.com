@@ -99,8 +99,6 @@ class CompanyService extends AbstractDomain
             $response = $client->request('GET', $url, [
               'query' => $newParams
             ]);
-            
-            $i=0;
             return json_decode($response->getBody()->getContents(), true);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());

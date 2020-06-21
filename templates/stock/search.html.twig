@@ -2,34 +2,39 @@
 {% block content %}
 
 <div class="content">
-    <form action="/search" method="post">
-        <div class="form-group">
-            <label for="title">Symbol</label>
-            <select class="form-control" name="symbol" required>
-                {% for item in symbol %}
-                    <option value="{{ item.Symbol }}">{{ attribute(item, 'Company Name')  }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="dateStart">dateStart</label>
-            <input type="text" class="form-control" data-date-format='yyyy-mm-dd' name="dateStart" id="dateStart" aria-describedby="dateStartHelp" placeholder="dateStart" required autocomplete="off">
-        </div>
-        <div class="form-group">
-            <label for="dateEnd">dateEnd</label>
-            <input type="text" class="form-control" data-date-format='yyyy-mm-dd' name="dateEnd" id="dateEnd" aria-describedby="dateEndHelp" placeholder="dateEnd" required autocomplete="off">
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="email" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
     {% for message in app.flashes('error') %}
         <div class="alert alert-danger">
             {{ message }}
         </div>
     {% endfor %}
+    <form action="/search" method="post">
+        <div class="form-group">
+            <label for="title">Symbol</label>
+            <select class="form-control" name="symbol" required>
+                <option>Select</option>
+                {% for item in symbol %}
+                    {% set selected = '' %}
+                    {% if (item.Symbol) == data.data.symbol|default('') %}
+                        {% set selected = 'selected' %}
+                    {% endif %}
+                    <option value="{{ item.Symbol }}" {{ selected }}>{{ attribute(item, 'Company Name')  }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="dateStart">dateStart</label>
+            <input value="{{ data.data.dateStart|default('')}}" type="text" class="form-control" data-date-format='yyyy-mm-dd' name="dateStart" id="dateStart" aria-describedby="dateStartHelp" placeholder="dateStart" required autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label for="dateEnd">dateEnd</label>
+            <input value="{{ data.data.dateEnd|default('')}}" type="text" class="form-control" data-date-format='yyyy-mm-dd' name="dateEnd" id="dateEnd" aria-describedby="dateEndHelp" placeholder="dateEnd" required autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input value="{{ data.data.email|default('')}}" type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="email" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
 {% endblock %}
 

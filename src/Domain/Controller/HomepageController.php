@@ -42,9 +42,10 @@ class HomepageController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function searchView() {
+    public function searchView(Request $request) {
+        $data = !empty($request->query->all()) ? $request->query->all() : [];
         $symbol = $this->companyService->getNasdaqListing();
-        return $this->render('stock/search.html.twig', ['symbol' => $symbol, 'errors' => []]);
+        return $this->render('stock/search.html.twig', ['symbol' => $symbol, 'data'=>$data]);
     }
     
     /**
